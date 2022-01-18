@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Charming-Chestnut/SDC-Products#readme",
   "dependencies": {
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "dotenv": "^14.2.0"
   }
 }
