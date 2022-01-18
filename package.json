@@ -1,0 +1,23 @@
+{
+  "name": "sdc-products",
+  "version": "1.0.0",
+  "description": "Refactoring Atelier API - Overviews Section only.",
+  "main": "schema.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Charming-Chestnut/SDC-Products.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Charming-Chestnut/SDC-Products/issues"
+  },
+  "homepage": "https://github.com/Charming-Chestnut/SDC-Products#readme",
+  "dependencies": {
+    "pg": "^8.7.1"
+  }
+}
