@@ -2,11 +2,11 @@ const pool = require('../db/index.js');
 
 pool.connect()
 .then(client => {
-    return client.query('select * FROM product_overview LIMIT 10')
+    return client.query('SELECT * FROM product_overview LIMIT 10')
     .then(res => {
         console.log(client.query)
         client.release();
-        return ("You requested " + page + " worth of data with " + count + " per page.");
+        return (page, count);
     })
     .catch(err => {
         client.release();

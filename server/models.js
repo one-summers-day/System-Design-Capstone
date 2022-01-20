@@ -9,16 +9,103 @@ module.exports = {
   getProductList: (page, count) => {
     return pool.connect()
     .then(client => {
-      return client.query('select * FROM product_overview LIMIT 10')
+      return client.query('SELECT * FROM product_overview LIMIT ' + page * count)
         .then(res => {
           console.log(client.query)
           client.release();
-          return ("You requested " + page + " worth of data with " + count + " per page.");
+          return (res.rows);
         })
         .catch(err => {
           client.release();
-          return err.stack;
+          return "MODEL-DBERR";
         })
     });
   },
+
+  getProductInfo: (product_id) => {
+    let productInfo;
+    return pool.connect()
+    .then(client => {
+      return client.query('SELECT * FROM product_overview WHERE id = ' + product_id)
+        .then(res => {
+          client.release();
+          productInfo = (res.rows);
+          return res.rows;
+        })
+        .catch(err => {
+          client.release();
+          return "MODEL-DBERR";
+        })
+    })
+  },
+
+  getProductFeatures: (product_id) => {
+    let productInfo;
+    return pool.connect()
+    .then(client => {
+      return client.query('SELECT * FROM features WHERE id = ' + product_id)
+        .then(res => {
+          client.release();
+          productInfo = (res.rows);
+          return res.rows;
+        })
+        .catch(err => {
+          client.release();
+          return "MODEL-DBERR";
+        })
+    })
+  },
+
+  getProductStyles: (product_id) => {
+    let productInfo;
+    return pool.connect()
+    .then(client => {
+      return client.query('SELECT * FROM styles WHERE product_id = ' + product_id)
+        .then(res => {
+          client.release();
+          productInfo = (res.rows);
+          return res.rows;
+        })
+        .catch(err => {
+          client.release();
+          return "MODEL-DBERR";
+        })
+    })
+  },
+
+  getProductPhotos: (style_id) => {
+    let productInfo;
+    return pool.connect()
+    .then(client => {
+      return client.query('SELECT * FROM photos WHERE style_id = ' + style_id)
+        .then(res => {
+          client.release();
+          productInfo = (res.rows);
+          return res.rows;
+        })
+        .catch(err => {
+          client.release();
+          return style_id;
+        })
+    })
+  },
+
+  getSkus: (style_id) => {
+    let productInfo;
+    return pool.connect()
+    .then(client => {
+      return client.query('SELECT * FROM skus WHERE style_id = ' + style_id)
+        .then(res => {
+          client.release();
+          productInfo = (res.rows);
+          return res.rows;
+        })
+        .catch(err => {
+          client.release();
+          return style_id;
+        })
+    })
+  }
 };
+
+

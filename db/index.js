@@ -5,8 +5,10 @@ const pool = new Pool({
   user: "postgres",
   password: "root",
   host: "localhost",
-  database: "products",
-  port: 3000
+  database: "products"
 });
 
 module.exports = pool;
+pool.connect().catch(err => {
+  console.log(err)
+})
