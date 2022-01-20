@@ -17,7 +17,7 @@ module.exports = {
         })
         .catch(err => {
           client.release();
-          return "MODEL-DBERR";
+          return err;
         })
     });
   },
@@ -34,7 +34,7 @@ module.exports = {
         })
         .catch(err => {
           client.release();
-          return "MODEL-DBERR";
+          return err;
         })
     })
   },
@@ -51,7 +51,7 @@ module.exports = {
         })
         .catch(err => {
           client.release();
-          return "MODEL-DBERR";
+          return err;
         })
     })
   },
@@ -68,7 +68,7 @@ module.exports = {
         })
         .catch(err => {
           client.release();
-          return "MODEL-DBERR";
+          return err;
         })
     })
   },
@@ -85,7 +85,7 @@ module.exports = {
         })
         .catch(err => {
           client.release();
-          return style_id;
+          return err;
         })
     })
   },
@@ -103,6 +103,23 @@ module.exports = {
         .catch(err => {
           client.release();
           return style_id;
+        })
+    })
+  },
+
+  patchSkus: (sku_id, quantityChange) => {
+    let productInfo;
+    return pool.connect()
+    .then(client => {
+      return client.query('UPDATE skus SET quantity = quantity + ' + quantityChange + ' WHERE id = ' + sku_id)
+        .then(res => {
+          client.release();
+          productInfo = (res.rows);
+          return "Operation successful. Use getProductInfo to see updated skus.";
+        })
+        .catch(err => {
+          client.release();
+          return "error occurred here";
         })
     })
   }

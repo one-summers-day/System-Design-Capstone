@@ -39,6 +39,7 @@ module.exports = {
     const { product_id } = req.query;
     let productStylesComplete = {"product_id" : product_id};
     let productStylesResults = {};
+    let skusObject = {};
     models.getProductStyles(product_id) 
       .then((productStyles) => {
         productStylesResults = productStyles[0];
@@ -53,7 +54,6 @@ module.exports = {
             delete productPhotos[counter].style_id;
           }
           productStylesResults.photos = productPhotos;
-          res.send(productStylesResults)
         })
         .catch((error) => {
           res.status(404).send(error);
@@ -63,8 +63,15 @@ module.exports = {
       .then(() => {
         models.getSkus(String(productStylesResults.style_id))
         .then((skus) => {
-          productStylesResults.skus = skus;
-          res.send(productStylesResults);
+          for (let counter = 0; counter < skus.length; counter++){
+            let id = String(skus[counter].id);
+            delete skus[counter].style_id;
+            delete skus[counter].id;
+            skusObject[id] = skus[counter];
+          }
+          productStylesResults.skus = skusObject;
+          productStylesComplete.results = [productStylesResults];
+          res.send(productStylesComplete);
         })
         .catch((error) => {
           res.status(404).send(error);
@@ -75,4 +82,15 @@ module.exports = {
         res.status(404).send(error);
       });
   },
+
+  patchSkus: (req, res) => {
+    const { sku_id, quantityChange } = req.query;
+    models.patchSkus(sku_id, quantityChange) 
+      .then((skus) => {
+        res.send(skus);
+      })
+      .catch((error) => {
+        res.status(404).send(error);
+      });
+  }
 };
