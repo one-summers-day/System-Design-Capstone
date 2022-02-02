@@ -1,2 +1,2 @@
 # SDC-Overviews
-Refactoring Atelier API - Overviews Section only.
+Constructed a fully functional RESTful API service to respond to clientside requests for the frontend capstone.
